@@ -5,6 +5,7 @@
     "node": ">=14.x"
   },
   "dependencies": {
+    "chalk": "^5.0.1",
     "jsdom": "^19.0.0",
     "marked": "^4.0.14",
     "npm": "^8.7.0"
@@ -12,6 +13,7 @@
   "description": "## Índice",
   "main": "index.js",
   "directories": {
+    "example": "examples",
     "test": "test"
   },
   "scripts": {
@@ -21,10 +23,20 @@
     "type": "git",
     "url": "git+https://github.com/smmu94/BOG004-md-links.git"
   },
-  "author": "",
+  "author": "Stephanie Morales",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/smmu94/BOG004-md-links/issues"
   },
-  "homepage": "https://github.com/smmu94/BOG004-md-links#readme"
+  "homepage": "https://github.com/smmu94/BOG004-md-links#readme",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "jest": "^28.0.1"
+  },
+  "keywords": [
+    "cli",
+    "api",
+    "recursive",
+    "npm"
+  ]
 }
