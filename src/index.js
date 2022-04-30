@@ -9,29 +9,34 @@ const fs = require("fs");
 
 let files = [];
 const mdLinks = (route, options) => {
-  if (verifyRoute(route)) {
-    const absRoute = pathAbsolute(route);
-    fs.stat(absRoute, (err, stats) => {
-      if (err) throw err;
-      if (stats.isFile()) {
-        if (getExt(absRoute)) {
-          readOneFile(absRoute).then((links) => {
-            return links;
-          });
+  return new Promise((resolve, reject) => {
+    if (verifyRoute(route)) {
+      const absRoute = pathAbsolute(route);
+      fs.stat(absRoute, (err, stats) => {
+        if (err) throw err;
+        if (stats.isFile()) {
+          if (getExt(absRoute)) {
+            readOneFile(absRoute, options).then((links) => {
+              resolve(links);
+            });
+          } else {
+              reject(`El archivo ${absRoute} no es Markdown`);
+          }
         } else {
-          console.log("El archivo no es Markdown");
+          getAllFiles(absRoute, files);
+          Promise.all(
+            files.map((file) => {
+              return readOneFile(file, options).then((links) => {
+                return links;
+              });
+            })
+          ).then((links) => {
+            resolve(links);
+          })
         }
-      } else {
-        getAllFiles(absRoute, files);
-        files.forEach((file) => {
-          readOneFile(file).then((links) => {
-            return links;
-          });
-        });
-      }
-    });
-  } else console.log("La ruta ingresada no es válida");
+      });
+    } else console.log("La ruta ingresada no es válida");
+  });
 };
 
 module.exports = mdLinks;
-
