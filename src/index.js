@@ -7,8 +7,9 @@ const {
 } = require("./auxFunctions.js");
 const fs = require("fs");
 
-let files = [];
+
 const mdLinks = (route, options) => {
+  let files = [];
   return new Promise((resolve, reject) => {
     if (verifyRoute(route)) {
       const absRoute = pathAbsolute(route);
@@ -35,8 +36,12 @@ const mdLinks = (route, options) => {
           })
         }
       });
-    } else console.log("La ruta ingresada no es válida");
+    } else reject("La ruta ingresada no es válida");
   });
 };
 
+
+// mdLinks('examples', '--validate').then((links) => {
+//   console.log(links);
+// });
 module.exports = mdLinks;

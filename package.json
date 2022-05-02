@@ -6,14 +6,14 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "chalk": "^5.0.1",
+    "chalk": "^4.1.2",
     "inquirer": "^8.2.3",
     "jsdom": "^19.0.0",
     "marked": "^4.0.14",
     "npm": "^8.7.0"
   },
   "description": "## Índice",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "example": "examples",
     "test": "test"
@@ -30,7 +30,7 @@
   "author": "Stephanie Morales",
   "license": "ISC",
   "bin": {
-    "md-Links": "src/mdLinks.js"
+    "md-links": "./src/cli.js" 
   },
   "bugs": {
     "url": "https://github.com/smmu94/BOG004-md-links/issues"
