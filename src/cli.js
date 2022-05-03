@@ -2,24 +2,66 @@
 const process = require("process");
 const mdLinks = require("./index.js");
 const chalk = require("chalk");
+const figlet = require("figlet");
+
+const header = () => {
+  return new Promise((resolve, reject) => {
+figlet.text(' Welcome to MD-LINKS ', {
+  width: 200,
+  whitespaceBreak: true
+}, function(err, data) {
+  if (err) {
+      console.log('Something went wrong...');
+      console.dir(err);
+      reject(err);
+  }
+  resolve(console.log(chalk.bgYellow.magenta.bold(data)));
+});
+  });
+}
+
+const instructions = `
+
+  ${chalk.cyanBright.bold("\nINSTRUCTIONS \n")}
+  1. If you want to know information about the links such as url and text enter the command md-links along with the path you want to query. 
+
+  This way: ${chalk.bgWhite.black.bold(' md-links ./some/example.md \n')}
+
+  2. If you want to know if the links work or are broken, in addition to the previous step, enter the --validate command.
+
+  This way: ${chalk.bgWhite.black.bold(' md-links ./some/example.md --validate \n')}  
+
+  3. If you want to know the number of links and the number of unique links, in addition to the first step, enter the --stats command.
+
+  This way: ${chalk.bgWhite.black.bold(' md-links ./some/example.md --stats \n')}
+
+  4. If you want to know the number of links, unique links and broken links, in addition to the first step, enter the --stats-and-validate command.
+
+  This way: ${chalk.bgWhite.black.bold(' md-links ./some/example.md --validate --stats \n')}
+  `;
+
+  if(process.argv.length < 3){
+  header().then(() => {
+     console.log(chalk.green.bold(instructions));
+  });
+}
+
 let args = process.argv;
 
 // Comportamiento por defecto de la función, si no se ingresa una opción
 const defaultOption = () => {
   mdLinks(args[2], args[3])
     .then((links) => {
-      console.group("Links encontrados");
+      console.group(chalk.cyanBright.bold("\n\n LINKS ENCONTRADOS \n"));
       links.forEach((link) => {
         if (typeof link === "object") {
-          console.group("\n Archivo: " + link[0].file, "\n");
-          for (let item of link) {
-            console.log(
-              chalk.bgYellowBright.black(item.file),
-              item.text,
-              item.href
-            );
-          }
-          console.groupEnd();
+          console.log(
+            "\n",
+            "✔️ ",
+            chalk.magentaBright(link.file),
+            link.text,
+            chalk.yellowBright(link.href)
+          );
         }
       });
       console.groupEnd();
@@ -34,21 +76,23 @@ const defaultOption = () => {
 const validateOption = () => {
   mdLinks(args[2], args[3])
     .then((links) => {
-      console.group("Links encontrados y validados \n");
+      console.group(
+        chalk.cyanBright.bold("\n Links encontrados y validados \n")
+      );
       links.forEach((link) => {
         if (typeof link === "object") {
-          console.group("\n Archivo: " + link[0].file, "\n");
-          for (let item of link) {
-            console.log(
-              chalk.bgYellowBright.black(item.file),
-              chalk.bgCyanBright.black(item.href),
-              chalk.bgRedBright(item.ok, item.status),
-              chalk.bgBlack(item.text),
-              "\n"
-            );
-          }
+          if (link.ok === "OK")
+            link.ok = chalk.green.bold(link.ok, link.status);
+          else link.ok = chalk.red.bold(link.ok, link.status);
+          console.log(
+            "\n",
+            "✔️ ",
+            chalk.magentaBright(link.file),
+            chalk.yellowBright(link.href),
+            link.ok,
+            link.text
+          );
         }
-        console.groupEnd();
       });
       console.groupEnd();
     })
@@ -65,18 +109,18 @@ const statsOption = () => {
   mdLinks(args[2], args[3])
     .then((links) => {
       console.group(
-        "\n Estadísticas sobre los links encontrados en cada archivo .md \n"
+        chalk.cyanBright.bold(
+          "\n Estadísticas sobre los links encontrados en los archivos .md \n"
+        )
       );
+      numOfLinks = links.length;
+
       links.forEach((link) => {
-        if (typeof link === "object") {
-          numOfLinks = link.length;
-          uniqLinks = [...new Set(link.map((item) => item.href))];
-          numOfUniqLinks = uniqLinks.length;
-          console.group("Archivo: " + link[0].file);
-          console.log("Total:", numOfLinks, "\nUnique:", numOfUniqLinks);
-          console.groupEnd();
-        }
+        if (typeof link === "object") uniqLinks.push(link.href);
       });
+      uniqLinks = [...new Set(uniqLinks)];
+      numOfUniqLinks = uniqLinks.length;
+      console.log("✔️ Total:", numOfLinks, "\n✔️ Unique:", numOfUniqLinks);
       console.groupEnd();
     })
     .catch((err) => {
@@ -90,28 +134,29 @@ const statsAndValidateOption = () => {
   mdLinks(args[2], args[3])
     .then((links) => {
       console.group(
-        "\n Estadísticas sobre los links encontrados en cada archivo .md \n"
+        chalk.cyanBright.bold(
+          "\n Estadísticas sobre los links encontrados en los archivos .md \n"
+        )
       );
+      numOfLinks = links.length;
       links.forEach((link) => {
         if (typeof link === "object") {
-          for (let item of link) {
-            if (item.status === "FAIL") numBrokenLinks++;
+          uniqLinks.push(link.href);
+          if (link.ok === "FAIL") {
+            numBrokenLinks++;
           }
-          numOfLinks = link.length;
-          uniqLinks = [...new Set(link.map((item) => item.href))];
-          numOfUniqLinks = uniqLinks.length;
-          console.group("Archivo: " + link[0].file);
-          console.log(
-            "Total:",
-            numOfLinks,
-            "\nUnique:",
-            numOfUniqLinks,
-            "\nBroken:",
-            numBrokenLinks
-          );
-          console.groupEnd();
         }
       });
+      uniqLinks = [...new Set(uniqLinks)];
+      numOfUniqLinks = uniqLinks.length;
+      console.log(
+        "✔️  Total:",
+        numOfLinks,
+        "\n✔️  Unique:",
+        numOfUniqLinks,
+        "\n❌ Broken:",
+        numBrokenLinks
+      );
       console.groupEnd();
     })
     .catch((err) => {
@@ -127,7 +172,7 @@ switch (args[3] + " " + args[4]) {
   case "--stats" + " " + undefined:
     statsOption();
     break;
-  case "--stats --validate":
+  case "--validate --stats":
     statsAndValidateOption();
     break;
   default:

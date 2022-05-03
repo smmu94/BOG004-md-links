@@ -21,7 +21,7 @@ const mdLinks = (route, options) => {
               resolve(links);
             });
           } else {
-              reject(`El archivo ${absRoute} no es Markdown`);
+              reject(`❌El archivo ${absRoute} no es Markdown`);
           }
         } else {
           getAllFiles(absRoute, files);
@@ -32,11 +32,12 @@ const mdLinks = (route, options) => {
               });
             })
           ).then((links) => {
-            resolve(links);
+            let linkFlat = links.flat();
+            resolve(linkFlat);
           })
         }
       });
-    } else reject("La ruta ingresada no es válida");
+    }     
   });
 };
 

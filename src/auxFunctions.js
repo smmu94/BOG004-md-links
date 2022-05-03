@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const getLinks = require("./getLinks.js");
+const chalk = require('chalk');
 
 // Verificar que la ruta ingresada es válida
 
@@ -33,7 +34,7 @@ const getAllFiles = (route, files) => {
     } else if (path.extname(absRoute) === "") {
       getAllFiles(absRoute, files);
     } else {
-      console.log(`El archivo ${absRoute} no es Markdown`);
+      console.error(chalk.bgGray(`\n❌ El archivo ${absRoute} no es Markdown`));
     }
   });
   return files;

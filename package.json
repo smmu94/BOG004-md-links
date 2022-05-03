@@ -7,9 +7,10 @@
   "dependencies": {
     "axios": "^0.27.2",
     "chalk": "^4.1.2",
+    "figlet": "^1.5.2",
     "inquirer": "^8.2.3",
     "jsdom": "^19.0.0",
-    "marked": "^4.0.14",
+    "marked": "^4.0.15",
     "npm": "^8.7.0"
   },
   "description": "## Índice",
@@ -30,7 +31,7 @@
   "author": "Stephanie Morales",
   "license": "ISC",
   "bin": {
-    "md-links": "./src/cli.js" 
+    "md-links": "./src/cli.js"
   },
   "bugs": {
     "url": "https://github.com/smmu94/BOG004-md-links/issues"

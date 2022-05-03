@@ -15,7 +15,7 @@ const onelink = {
 
 const getLinks = (data, file, options) => {
   file = path.relative(process.cwd(), file);
-  file = './' + file;
+file = '.\\'+ file;
   let arraylink = [];
   let html = marked(data);
   const dom = new JSDOM(html);
