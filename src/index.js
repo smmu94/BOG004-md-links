@@ -18,17 +18,26 @@ const mdLinks = (route, options) => {
         if (stats.isFile()) {
           if (getExt(absRoute)) {
             readOneFile(absRoute, options).then((links) => {
-              resolve(links);
+              if(typeof links === 'object'){
+                resolve(links);
+               } else {
+                resolve([]);
+               }
+              
             });
           } else {
-              reject(`❌El archivo ${absRoute} no es Markdown`);
+              reject(`❌El archivo no es Markdown`);
           }
         } else {
           getAllFiles(absRoute, files);
           Promise.all(
             files.map((file) => {
               return readOneFile(file, options).then((links) => {
-                return links;
+                if(typeof links === 'object'){
+                 return links;
+                } else {
+                  return [];
+                }
               });
             })
           ).then((links) => {
@@ -37,12 +46,10 @@ const mdLinks = (route, options) => {
           })
         }
       });
-    }     
+    } else {
+      reject('❌La ruta no es valida');
+    }  
   });
 };
 
-
-// mdLinks('examples', '--validate').then((links) => {
-//   console.log(links);
-// });
 module.exports = mdLinks;

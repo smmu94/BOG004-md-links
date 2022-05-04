@@ -4,10 +4,10 @@ const mdLinks = require("./index.js");
 const chalk = require("chalk");
 const figlet = require("figlet");
 
-const header = () => {
+const header = () =>  {
   return new Promise((resolve, reject) => {
-figlet.text(' Welcome to MD-LINKS ', {
-  width: 200,
+ figlet.text(' Welcome to MD-LINKS ', {
+  width: 100,
   whitespaceBreak: true
 }, function(err, data) {
   if (err) {
@@ -48,10 +48,12 @@ const instructions = `
 
 let args = process.argv;
 
+
 // Comportamiento por defecto de la función, si no se ingresa una opción
 const defaultOption = () => {
-  mdLinks(args[2], args[3])
+  mdLinks(args[2], { validate: false })
     .then((links) => {
+      if(links.length !== 0){
       console.group(chalk.cyanBright.bold("\n\n LINKS ENCONTRADOS \n"));
       links.forEach((link) => {
         if (typeof link === "object") {
@@ -65,6 +67,7 @@ const defaultOption = () => {
         }
       });
       console.groupEnd();
+    }
     })
     .catch((err) => {
       console.log(err);
@@ -74,8 +77,11 @@ const defaultOption = () => {
 // Comportamiento de la función, si se ingresa opción --validate
 
 const validateOption = () => {
-  mdLinks(args[2], args[3])
+  
+  mdLinks(args[2], { validate: true })
     .then((links) => {
+      console.log
+      if(links.length !== 0){
       console.group(
         chalk.cyanBright.bold("\n Links encontrados y validados \n")
       );
@@ -95,6 +101,7 @@ const validateOption = () => {
         }
       });
       console.groupEnd();
+    }
     })
     .catch((err) => {
       console.log(err);
@@ -106,8 +113,9 @@ let numOfLinks = 0;
 let numOfUniqLinks = 0;
 let uniqLinks = [];
 const statsOption = () => {
-  mdLinks(args[2], args[3])
+  mdLinks(args[2], { validate: false })
     .then((links) => {
+      if(links.length !== 0){
       console.group(
         chalk.cyanBright.bold(
           "\n Estadísticas sobre los links encontrados en los archivos .md \n"
@@ -122,6 +130,7 @@ const statsOption = () => {
       numOfUniqLinks = uniqLinks.length;
       console.log("✔️ Total:", numOfLinks, "\n✔️ Unique:", numOfUniqLinks);
       console.groupEnd();
+    }
     })
     .catch((err) => {
       console.log(err);
@@ -131,8 +140,9 @@ const statsOption = () => {
 // Comportamiento de la función, si se ingresa opción --stats --validate
 let numBrokenLinks = 0;
 const statsAndValidateOption = () => {
-  mdLinks(args[2], args[3])
+  mdLinks(args[2], { validate: true })
     .then((links) => {
+      if(links.length !== 0){
       console.group(
         chalk.cyanBright.bold(
           "\n Estadísticas sobre los links encontrados en los archivos .md \n"
@@ -158,6 +168,7 @@ const statsAndValidateOption = () => {
         numBrokenLinks
       );
       console.groupEnd();
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -179,3 +190,4 @@ switch (args[3] + " " + args[4]) {
     defaultOption();
     break;
 }
+

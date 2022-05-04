@@ -22,7 +22,7 @@ file = '.\\'+ file;
   const document = dom.window.document;
   const links = document.querySelectorAll("a");
   if (links.length === 0)
-    return (arraylink = `El archivo ${file} no contiene links`);
+    return console.error(`❌El archivo ${file} no contiene links`);
   else {
     links.forEach((link) => {
       if (link.href.includes("http")) {
@@ -34,7 +34,7 @@ file = '.\\'+ file;
         arraylink.push(newLink);
       }
     });
-    if (options === "--validate") {
+    if (options) {
       return Promise.all(
         arraylink.map((link) => {
           return validateLinks(link.href)

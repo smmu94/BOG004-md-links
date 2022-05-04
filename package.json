@@ -20,8 +20,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ext .js,.md src test",
+    "test": "jest --coverage",
+    "eslint": "eslint --ext .js test/",
+    "pretest": "npm run eslint",
     "build": "npm run lint && npm run test && npm run build:docs"
   },
   "repository": {
@@ -39,7 +40,7 @@
   "homepage": "https://github.com/smmu94/BOG004-md-links#readme",
   "devDependencies": {
     "eslint": "^8.14.0",
-    "jest": "^28.0.1"
+    "jest": "^28.0.3"
   },
   "keywords": [
     "cli",
