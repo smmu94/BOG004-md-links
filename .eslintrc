@@ -4,5 +4,20 @@
   },
   "parserOptions": {
     "ecmaVersion": 8
+  },
+  "rules": {
+    "indent": [
+        "error",
+        "tab"
+    ],
+    "quotes": [
+        "error",
+        "single"
+    ],
+    "semi": [
+        "error",
+        "always"
+    ]
   }
+
 }

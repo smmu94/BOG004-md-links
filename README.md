@@ -27,7 +27,7 @@ MD-links es una biblioteca que mediante el uso de Node.js lee y analiza los arch
 
 ## 4. Instalación
 
-    npm i md-links_stephanie
+    npm i md-links-sm
 
 ## 5. Guía de uso
 
@@ -38,7 +38,7 @@ MD-links es una biblioteca que mediante el uso de Node.js lee y analiza los arch
 La biblioteca se importa y usa de acuerdo al siguiente ejemplo
 
 
-    const mdLinks = require("md-links_stephanie");
+    const mdLinks = require("md-links_sm");
 
 Las propiedades de los links que se obtienen son:
 
