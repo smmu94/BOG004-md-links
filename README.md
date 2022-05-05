@@ -50,21 +50,21 @@ Si se realiza validación se muestran además las siguientes propiedades:
 
 * `status`: Código de respuesta HTTP.
 * `ok`: Mensaje `fail` en caso de fallo u `ok` en caso de éxito.
-### 5.1.1 Cuando se ingresa una ruta de archivo
+#### 5.1.1 Cuando se ingresa una ruta de archivo
 
     mdLinks("./some/example.md")
     .then(links => {
     // => [{ href, text, file }, ...]
     }).catch(console.error);
 
-### 5.1.2 Cuando se ingresa una ruta de archivo y se realiza validación 
+#### 5.1.2 Cuando se ingresa una ruta de archivo y se realiza validación 
 
     mdLinks("./some/example.md", { validate: true })
     .then(links => {
     // => [{ href, text, file, status, ok }, ...]
     }).catch(console.error);
 
-### 5.1.3 Cuando se ingresa una ruta de directorio
+#### 5.1.3 Cuando se ingresa una ruta de directorio
 
     mdLinks("./some/dir")
     .then(links => {
