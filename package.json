@@ -1,5 +1,5 @@
 {
-  "name": "md-links",
+  "name": "md-links_stephanie",
   "version": "0.1.0",
   "engines": {
     "node": ">=14.x"
@@ -16,7 +16,6 @@
   "description": "## Índice",
   "main": "src/index.js",
   "directories": {
-    "example": "examples",
     "test": "test"
   },
   "scripts": {
@@ -32,7 +31,7 @@
   "author": "Stephanie Morales",
   "license": "ISC",
   "bin": {
-    "md-links": "./src/cli.js"
+    "md-links": "src/cli.js"
   },
   "bugs": {
     "url": "https://github.com/smmu94/BOG004-md-links/issues"
@@ -47,5 +46,8 @@
     "api",
     "recursive",
     "npm"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

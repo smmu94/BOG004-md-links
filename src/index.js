@@ -46,8 +46,9 @@ const mdLinks = (route, options) => {
           })
         }
       });
-    } else {
-      reject('❌La ruta no es valida');
+    } else{
+      if(typeof route === 'string')
+      reject('❌La ruta ingresada no es valida');
     }  
   });
 };

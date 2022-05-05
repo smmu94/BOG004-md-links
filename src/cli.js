@@ -53,6 +53,7 @@ let args = process.argv;
 const defaultOption = () => {
   mdLinks(args[2], { validate: false })
     .then((links) => {
+      console.log(links);
       if(links.length !== 0){
       console.group(chalk.cyanBright.bold("\n\n LINKS ENCONTRADOS \n"));
       links.forEach((link) => {
@@ -175,19 +176,14 @@ const statsAndValidateOption = () => {
     });
 };
 
-// De acuerdo a la opción ingresada por el usuario, se ejecuta una función u otra
-switch (args[3] + " " + args[4]) {
-  case "--validate" + " " + undefined:
-    validateOption();
-    break;
-  case "--stats" + " " + undefined:
-    statsOption();
-    break;
-  case "--validate --stats":
-    statsAndValidateOption();
-    break;
-  default:
-    defaultOption();
-    break;
-}
 
+// De acuerdo a la opción ingresada por el usuario, se ejecuta una función u otra
+if(args.includes("--validate") && args.includes("--stats") || args.includes("--stats-and-validate")){
+  statsAndValidateOption();
+} else if(args.includes("--validate")){
+  validateOption();
+} else if(args.includes("--stats")){
+  statsOption();
+} else {
+  defaultOption();
+}

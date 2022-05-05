@@ -1,7 +1,6 @@
 const { options } = require("marked");
 const mdLinks = require("../src/index.js");
-const mocks = require("./md-links.mocks.js");
-
+const mocks = require("./mocks.js");
 
 describe("mdLinks", () => {
   it("should be a function", () => {
@@ -15,7 +14,7 @@ describe("mdLinks", () => {
   });
   it("should return an error if the route is not valid", () => {
     expect(mdLinks(mocks.routeFileInvalid)).rejects.toMatch(
-      '❌La ruta no es valida'
+      "❌La ruta ingresada no es valida"
     );
   });
   it("should return an error if the route is not valid", () => {
@@ -36,18 +35,8 @@ describe("mdLinks", () => {
   });
 
   test("should resolve [{href, text, file, status, ok}] if options.validate is true", () => {
-    return mdLinks(mocks.routeFile, {validate : true}).then((links) => {
+    return mdLinks(mocks.routeFolder, { validate: true }).then((links) => {
       expect(links).toEqual(mocks.linksWithValidate);
     });
   });
-
-
 });
-
-// describe('mdLinks', () => {
-
-//   it('should...', () => {
-//     console.log('FIX ME!');
-//   });
-
-// });

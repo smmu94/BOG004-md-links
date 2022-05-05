@@ -11,11 +11,11 @@ const onelink = {
   text: "",
   file: "",
 };
-// Funcion para obtener los links de un archivo .md
 
+// Funcion para obtener los links de un archivo .md
 const getLinks = (data, file, options) => {
-  file = path.relative(process.cwd(), file);
-file = '.\\'+ file;
+  // file = path.relative(process.cwd(), file);
+  // file = ".\\" + file;
   let arraylink = [];
   let html = marked(data);
   const dom = new JSDOM(html);
@@ -26,7 +26,9 @@ file = '.\\'+ file;
   else {
     links.forEach((link) => {
       if (link.href.includes("http")) {
-        link.text.length >50 ? (link.text = link.text.substring(0,50) + '...') : link.text;
+        link.text.length > 50
+          ? (link.text = link.text.substring(0, 50) + "...")//si el texto es mayor a 50 caracteres, cortarlo
+          : link.text;
         let newLink = Object.create(onelink);
         newLink.href = link.href;
         newLink.text = link.text;
