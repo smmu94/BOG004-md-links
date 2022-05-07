@@ -17,7 +17,7 @@ const getLinks = (data, file, options) => {
 	const { document } = dom.window;
 	const links = document.querySelectorAll('a');
 	if (links.length === 0) {
-		return console.error(`❌El archivo ${file} no contiene links`);
+		return console.log(`❌El archivo ${file} no contiene links`);
 	}
 
 	links.forEach((link) => {

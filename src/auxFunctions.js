@@ -32,7 +32,7 @@ const getAllFiles = (route, files) => {
 		} else if (path.extname(absRoute) === '') {
 			getAllFiles(absRoute, files);
 		} else {
-			console.error(chalk.bgGray(`\n❌ El archivo ${absRoute} no es Markdown`));
+			console.log(chalk.bgGray(`\n❌ El archivo ${absRoute} no es Markdown`));
 		}
 	});
 	return files;

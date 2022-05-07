@@ -28,27 +28,21 @@ describe('mdLinks asynchronous test', () => {
 			expect(links).toEqual(mocks_data.linksWithOutValidate);
 		});
 	});
-	test('should resolve links if its a directory', () => {
+	test('should return a objetc it is a directory', () => {
 		return mdLinks(mocks_data.routeFolder).then((links) => {
 			expect(typeof links).toBe('object');
 		});
 	}
 	);
-
-	test('should resolve [] if file.md does not have links, () => {', () => {
+	test('should resolve [] if file.md does not have links', () => {
 		return mdLinks(mocks_data.mdFileWithOutLinks).then((links) => {
 			expect(links).toEqual([]);
 		});
 	});
-
-	test('status should to be 404 if options.validate is true', () => {
-		return mdLinks(mocks_data.routeFile, { validate: true }).then((links) => {
-			return expect(links[0].status).toBe('404');
+	test('should resolve [{href, text, file, status, ok}] if options.validate is true', () => {
+		 return mdLinks(mocks_data.routeFile, {validate : true}).then((links) => {
+		  expect(links).toEqual(mocks_data.linksWithValidate);
 		});
-	});
-	test('status info should to be OK if options.validate is true', () => {
-		return mdLinks(mocks_data.routeFile, { validate: true }).then((links) => {
-			return expect(links[1].ok).toBe('OK');
-		});
-	});
+	  });
 });
+
