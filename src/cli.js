@@ -53,6 +53,7 @@ let args = process.argv;
 const defaultOption = () => {
 	mdLinks(args[2], { validate: false })
 		.then((links) => {
+		
 			if(links.length !== 0){
 				console.group(chalk.cyanBright.bold('\n\n LINKS ENCONTRADOS \n'));
 				links.forEach((link) => {
@@ -80,6 +81,7 @@ const validateOption = () => {
   
 	mdLinks(args[2], { validate: true })
 		.then((links) => {
+			console.log(links);
 			if(links.length !== 0){
 				console.group(
 					chalk.cyanBright.bold('\n Links encontrados y validados \n')

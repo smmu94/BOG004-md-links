@@ -1,42 +1,54 @@
-const { options } = require('marked');
 const mdLinks = require('../src/index.js');
-const mocks = require('./mocks.js');
+const mocks_data = require('./mocks_data.js');
 
-describe('mdLinks', () => {
+describe('mdLinks synchronous test', () => {
 	it('should be a function', () => {
 		expect(typeof mdLinks).toBe('function');
 	});
-	it('should return an array', () => {
-		expect(typeof mdLinks(mocks.routeFile)).toBe('object');
+	it('should return a promise if get a file or Directory', () => {
+		expect(mdLinks(mocks_data.routeFile)).toBeInstanceOf(Promise);
+		expect(mdLinks(mocks_data.routeDir)).toBeInstanceOf(Promise);
 	});
-	it('should return an array', () => {
-		expect(typeof mdLinks(mocks.routeFolder)).toBe('object');
-	});
+
 	it('should return an error if the route is not valid', () => {
-		expect(mdLinks(mocks.routeFileInvalid)).rejects.toMatch(
+		expect(mdLinks(mocks_data.routeFileInvalid)).rejects.toMatch(
 			'❌La ruta ingresada no es valida'
 		);
 	});
-	it('should return an error if the route is not valid', () => {
-		expect(mdLinks(mocks.fileNotMd)).rejects.toMatch(
+	it('should return an error if the file is not md', () => {
+		expect(mdLinks(mocks_data.fileNotMd)).rejects.toMatch(
 			'❌El archivo no es Markdown'
 		);
 	});
+});
+
+describe('mdLinks asynchronous test', () => {
 	test('should resolve links if its a file', () => {
-		return mdLinks(mocks.routeFile).then((links) => {
-			expect(links).toEqual(mocks.linksWithOutValidate);
+		return mdLinks(mocks_data.routeFile).then((links) => {
+			expect(links).toEqual(mocks_data.linksWithOutValidate);
 		});
 	});
+	test('should resolve links if its a directory', () => {
+		return mdLinks(mocks_data.routeFolder).then((links) => {
+			expect(typeof links).toBe('object');
+		});
+	}
+	);
 
 	test('should resolve [] if file.md does not have links, () => {', () => {
-		return mdLinks(mocks.mdFileWithOutLinks).then((links) => {
+		return mdLinks(mocks_data.mdFileWithOutLinks).then((links) => {
 			expect(links).toEqual([]);
 		});
 	});
 
-	test('should resolve [{href, text, file, status, ok}] if options.validate is true', () => {
-		return mdLinks(mocks.routeFolder, { validate: true }).then((links) => {
-			expect(links).toEqual(mocks.linksWithValidate);
+	test('status should to be 404 if options.validate is true', () => {
+		return mdLinks(mocks_data.routeFile, { validate: true }).then((links) => {
+			return expect(links[0].status).toBe('404');
+		});
+	});
+	test('status info should to be OK if options.validate is true', () => {
+		return mdLinks(mocks_data.routeFile, { validate: true }).then((links) => {
+			return expect(links[1].ok).toBe('OK');
 		});
 	});
 });

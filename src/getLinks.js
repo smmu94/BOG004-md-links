@@ -32,7 +32,7 @@ const getLinks = (data, file, options) => {
 			arraylink.push(newLink);
 		}
 	});
-	if (options) {
+	if (options.validate) {
 		return Promise.all(
 			arraylink.map((link) =>
 				validateLinks(link.href)
@@ -42,12 +42,14 @@ const getLinks = (data, file, options) => {
 						return link;
 					})
 					.catch((err) => {
-						link.status = err.response.status;
+						link.status = err.status;
 						link.ok = 'FAIL';
 						return link;
 					})
 			)
-		).then((links) => links);
+		).then(links =>{
+			return links;
+		});
 	}
 	return arraylink;
 };

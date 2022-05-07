@@ -7,7 +7,9 @@ const {
 	getAllFiles,
 } = require('./auxFunctions');
 
-const mdLinks = (route, options) => {
+
+
+const mdLinks = (route, options = {validate: false}) => {
 	const files = [];
 	return new Promise((resolve, reject) => {
 		if (verifyRoute(route)) {
