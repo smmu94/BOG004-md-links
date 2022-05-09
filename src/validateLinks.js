@@ -1,14 +1,14 @@
 const axios = require('axios');
 
 const validateLinks = (link) => {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		axios
 			.get(link)
 			.then((res) => {
 				resolve(res);
 			})
 			.catch((err) => {
-				reject(err.response);
+				resolve(err.response);
 			});
 	});
 };

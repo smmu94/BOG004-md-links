@@ -81,7 +81,6 @@ const validateOption = () => {
   
 	mdLinks(args[2], { validate: true })
 		.then((links) => {
-			console.log(links);
 			if(links.length !== 0){
 				console.group(
 					chalk.cyanBright.bold('\n Links encontrados y validados \n')
@@ -178,7 +177,7 @@ const statsAndValidateOption = () => {
 
 
 // De acuerdo a la opción ingresada por el usuario, se ejecuta una función u otra
-if(args.includes('--validate') && args.includes('--stats') || args.includes('--stats-and-validate')){
+if(args.includes('--validate') && args.includes('--stats')){
 	statsAndValidateOption();
 } else if(args.includes('--validate')){
 	validateOption();

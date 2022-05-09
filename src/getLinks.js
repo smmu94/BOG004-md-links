@@ -35,19 +35,13 @@ const getLinks = (data, file, options) => {
 	if (options.validate) {
 		return Promise.all(
 			arraylink.map((link) =>
-				validateLinks(link.href)
-					.then((res) => {
-						link.status = res.status;
-						link.ok = 'OK';
-						return link;
-					})
-					.catch((err) => {
-						link.status = err.status;
-						link.ok = 'FAIL';
-						return link;
-					})
+				validateLinks(link.href).then((res) => {
+					link.status = res.status;
+					res.status === 200 ? (link.ok = 'OK') : (link.ok = 'FAIL');
+					return link;
+				})
 			)
-		).then(links =>{
+		).then((links) => {
 			return links;
 		});
 	}

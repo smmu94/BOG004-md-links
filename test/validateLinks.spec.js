@@ -19,9 +19,9 @@ describe('validateLinks', () => {
 	test('should resolve 404 if link is not valid', () => {
 		const link = mocks_data.linksWithOutValidate[0].href;
 		const linkValidateStatus = mocks_data.linksWithValidate[0].status;
-		axios.get.mockRejectedValue({ response: { status: 404 } });
-		return validateLinks(link).catch((err) => {
-			expect(err.status).toBe(linkValidateStatus);
+		axios.get.mockResolvedValue({ response: { status: 404 } });
+		return validateLinks(link).then((err) => {
+			expect(err.response.status).toBe(linkValidateStatus);
 		});
 	});
 });
