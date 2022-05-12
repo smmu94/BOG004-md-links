@@ -1,6 +1,6 @@
 {
   "name": "@smmu94/md-links",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "engines": {
     "node": ">=14.x"
   },
