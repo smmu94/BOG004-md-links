@@ -43,6 +43,6 @@ describe('mdLinks asynchronous test', () => {
 		 return mdLinks(mocks_data.routeFile, {validate : true}).then((links) => {
 		  expect(links).toEqual(mocks_data.linksWithValidate);
 		});
-	  }, );
+	  }, 6000);
 });
 

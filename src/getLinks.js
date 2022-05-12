@@ -37,7 +37,7 @@ const getLinks = (data, file, options) => {
 			arraylink.map((link) =>
 				validateLinks(link.href).then((res) => {
 					link.status = res.status;
-					res.status === 200 ? (link.ok = 'OK') : (link.ok = 'FAIL');
+					(res.status >= 200 && res.status < 400) ? (link.ok = 'OK') : (link.ok = 'FAIL');
 					return link;
 				})
 			)

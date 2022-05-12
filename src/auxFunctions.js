@@ -12,7 +12,7 @@ const verifyRoute = (route) => {
 // Verificar si el route es absoluto o relativo, hacerlo absoluto si es relativo
 
 const pathAbsolute = (route) => {
-	if (path.isAbsolute(route)) return (route = route);
+	if (path.isAbsolute(route)) return route;
 	return (route = path.resolve(route));
 };
 
